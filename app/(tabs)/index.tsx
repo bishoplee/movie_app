@@ -38,31 +38,36 @@ export default function Index() {
       >
         <Image 
           source={icons.logo}
-          className="w-12 h-10 justify-center mt-20 mb-5 mx-auto"
+          className="w-12 h-10 justify-center mt-20 mb-12 mx-auto"
         />
 
+        <SearchBar
+          onPress={() => router.push('/search')}
+          placeholder="Search movies, TV shows..." value={""} onChangeText={function (text: string): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+    
+        <View className="flex-row justify-between align-items-center mb-1 mt-8">
+          <Text className="text-white text-2xl font-bold">Latest Movies</Text>
+          <Link href="/search" asChild>
+            <Text className="text-white text-lg font-sm">view all</Text>
+          </Link>
+        </View>
+                
         {moviesLoading ? (
           // <Text className="text-white text-lg text-center">Loading...</Text>
           <ActivityIndicator
             size="large"
             color="#e5e5e7ff"
-            className="mt-16 self-center"
+            className="mt-8 self-center"
           />
         ) : moviesError ? (
           <Text
             className="text-red-500 text-lg text-center"
           >Error: {moviesError?.message}</Text>
         ) : (
-          <View className="flex-1 mt-5">
-            <SearchBar
-              onPress={() => router.push('/search')}
-              placeholder="Search movies, TV shows..."
-            />
-                
-            <>
-              <Text className="text-white text-2xl font-bold mb-8 mt-16">Trending Movies</Text>
-            </>
-            
+          <View className="flex-1 mt-8">
             <FlatList
               data={movies?.results}
               renderItem={({ item }) => (
@@ -72,12 +77,12 @@ export default function Index() {
               keyExtractor={(item) => item.id.toString()}
               numColumns={3}
               columnWrapperStyle={{
-                justifyContent: 'flex-start',
-                gap: 4,
+                justifyContent: 'center',
+                gap: 8,
                 // paddingRight: 4,
                 marginBottom: 16
               }}
-              className="mt-4 pb-32"
+              className="mt-1 pb-32"
               scrollEnabled={false}
             />
           </View>
